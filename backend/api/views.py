@@ -10,16 +10,36 @@ load_dotenv()
 
 class OpenAIView(APIView):
     def post(self, request):
-        user_message = request.data.get("message", "")
-        if not user_message:
+        if not request.data.get("message", ""):
             return Response({"error":"Message is required"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        if not request.data.get("language"):
+            return Response({"error": "Language is required"}, status=status.HTTP_400_BAD_REQUEST)
+
         openai.api_key = os.getenv("OPENAI_API_KEY")
-        # try:
-        #     response = openai.ChatCompletion.create(
-        #         model="gpt-3.5-turbo",
-        #         messages=[{"role": "user", "content": user_message}],
-        #     )
-        #     return Response({"response": response.choices[0].messsage["content"]}, status=status.HTTP_200_OK)
-        # except Exception as e:
-        #     return Response({"error":str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        return Response({"response":"La brisa acaricia el amanecer mientras las olas susurran secretos antiguos al mundo. Un pájaro solitario cruza el cielo, dibujando esperanza en su vuelo. Cada instante es un tesoro oculto, una promesa de cambio. El horizonte arde en colores vivos, recordándonos que la vida es un lienzo esperando ser pintado."}, status=status.HTTP_200_OK)
+
+        messages = [
+           {
+               "role":"system",
+               "content":"Translate the content after the ## in the language that will be given before the ##" 
+           },
+           {
+               "role":"user",
+               "content":str(request.data.get("language","") + "##" + request.data.get("message"))
+           }
+        ]
+       
+        try:
+            response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=messages,
+            )
+            return Response({"response": response.choices[0].messsage["content"]}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"error":str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        # if request.data.get("language","") == 'French':
+        #     return Response({"response":"j'adore le chocolat et la glace."}, status=status.HTTP_200_OK)
+        # elif request.data.get("language", "") == "Portuguese":
+        #     return Response({"response":"Eu adoro chocolate e sorvete"}, status=status.HTTP_200_OK)
+        # else:
+        #     return Response({"response":"私はチョコレートとアイスクリームが大好きです"}, status=status.HTTP_200_OK)
