@@ -2,6 +2,7 @@ import './App.css';
 import Box from './components/Box'
 import Translated from './components/Translated'
 import Banner from './components/Banner'
+import Powered from './components/Powered'
 import {useState} from 'react';
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
     <Banner />
     { showForm && <Box translate={translate}/> }
     { showResults && <Translated text={translationData.text} onClick={onStartOver} translation={translationData.translation}/> }
+    <Powered />
     </>
   );
 }

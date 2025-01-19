@@ -2,6 +2,7 @@
   text-align: center;
 }
 
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -40,7 +41,8 @@
 /* Estilos generales para el formulario */
 body {
   max-width: 400px;
-  margin: 0 auto;
+  margin:auto;
+  margin-top: 50px;
   padding: 30px;
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -126,7 +128,7 @@ button {
   display: block;
   width: 100%;
   padding: 10px;
-  background-color: #4CAF50;
+  background-color: #1c3eff;
   color: white;
   border: none;
   border-radius: 4px;
@@ -137,7 +139,7 @@ button {
 
 /* Cambiar el color de fondo cuando se pasa el cursor */
 button:hover {
-  background-color: #45a049;
+  background-color: #4546a0;
 }
 
 /* Estilo adicional si es necesario para el botón de enviar */
@@ -158,4 +160,18 @@ button:focus {
   border-radius: 10px;
   padding: 10px;
   border: 1px solid #cacaca;
+}
+
+h2 {
+  text-align: center; /* Centra el texto horizontalmente dentro del h2 */
+  padding: 10px; /* Añade un espacio alrededor del texto */
+  background-color: #dddddd; /* Color de fondo */
+  border-radius: 8px; /* Borde redondeado */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  color: #333; /* Color del texto */
+}
+
+#powered {
+  font-size: small;
+  text-align: center;
 }

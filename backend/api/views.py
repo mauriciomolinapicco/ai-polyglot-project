@@ -21,20 +21,20 @@ class OpenAIView(APIView):
         messages = [
            {
                "role":"system",
-               "content":"Translate the content after the ## in the language that will be given before the ##" 
+               "content":f"Translate into {str(request.data.get('language',''))}" 
            },
            {
                "role":"user",
-               "content":str(request.data.get("language","") + "##" + request.data.get("message"))
+               "content":request.data.get("message")
            }
         ]
        
         try:
             response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
+                model="gpt-3.5-turbo-0125",
                 messages=messages,
             )
-            return Response({"response": response.choices[0].messsage["content"]}, status=status.HTTP_200_OK)
+            return Response({"response": response.choices[0].message["content"]}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"error":str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         # if request.data.get("language","") == 'French':
